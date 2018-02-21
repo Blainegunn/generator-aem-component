@@ -1,0 +1,22 @@
+{
+  "name": "generator-aem-component",
+  "version": "1.0.0",
+  "description": "A basic conponent generator for Adobe Expirecne Manager (AEM).",
+  "main": "index.js",
+  "dependencies": {
+    "chalk": "^2.3.1",
+    "find": "^0.2.7",
+    "html-wiring": "^1.2.0",
+    "path": "^0.12.7",
+    "path-exists": "^3.0.0",
+    "yeoman-generator": "^0.24.1",
+    "yosay": "^1.2.0"
+  },
+  "keywords": [
+   "aem",
+   "yeoman-generator"
+  ],
+  "author": "Blaine Gunn <blianegunn@gmail.com> (http://blainegunn.com/)",
+  "repository": "Blainegunn/generator-aem-component",
+  "license": "ISC"
+}
