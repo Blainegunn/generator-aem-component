@@ -1,6 +1,6 @@
 {
   "name": "generator-aem-component",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A basic conponent generator for Adobe Expirecne Manager (AEM).",
   "main": "index.js",
   "dependencies": {

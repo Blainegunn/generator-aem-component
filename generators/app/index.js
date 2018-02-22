@@ -17,7 +17,7 @@ var path = require('path');
 var wiring = require('html-wiring');
 var pathExists = require('path-exists');
 var find = require('find');
-var pkg = require('./../../../package.json');
+var pkg = require('./../../../../package.json');
 
 var appJs = pkg.paths.scripts;
 var appLess = pkg.paths.styles;
@@ -43,7 +43,7 @@ module.exports = yeoman.Base.extend({
     var generator = this;
 
     this.log(yosay(
-      'Welcome to the ' + chalk.red('???????') + ' generator! \nI create stub files for new AEM components.'
+      'Welcome to the ' + chalk.red('AEM Generator') + '! \nI create stub files for new AEM components.'
     ));
 
     var prompts = [{
@@ -149,11 +149,13 @@ module.exports = yeoman.Base.extend({
     /*
      * JS FILE
      */
-    this.fs.copyTpl(
-      this.templatePath('componentJavaScript.js'),
-      this.destinationPath(path.join(jsPath, this.props.folderName, this.props.jsFileName + '.js')),
-      this.props
-    );
+    if (this.props.jsFileName) {
+      this.fs.copyTpl(
+        this.templatePath('componentJavaScript.js'),
+        this.destinationPath(path.join(jsPath, this.props.folderName, this.props.jsFileName + '.js')),
+        this.props
+      );
+    }
 
     /*
      * JAVA FILE TODO
