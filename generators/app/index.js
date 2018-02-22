@@ -167,7 +167,7 @@ module.exports = yeoman.Base.extend({
     if (this.props.htlPath) {
       this.fs.copyTpl(
         this.templatePath('htl.html'),
-        this.destinationPath(path.join(htlPath, this.props.folderName, this.props.jsFileName + '.html')),
+        this.destinationPath(path.join(htlPath, this.props.folderName, this.props.folderName + '.html')),
         this.props
       );
       this.fs.copyTpl(
