@@ -19,11 +19,11 @@ var pathExists = require('path-exists');
 var find = require('find');
 var pkg = require('./../../../../package.json');
 
-var appJs = pkg.paths.scripts;
-var appLess = pkg.paths.styles;
+var appJs = pkg.paths.appScript;
+var appLess = pkg.paths.appStyle;
 
-var lessPath = pkg.paths.lessPath;
-var jsPath = pkg.paths.jsPath;
+var lessPath = pkg.paths.stylesPath;
+var jsPath = pkg.paths.scriptsPath;
 var javaPath = pkg.paths.javaPath;
 var htlPath = pkg.paths.htlPath;
 
@@ -66,6 +66,11 @@ module.exports = yeoman.Base.extend({
         }
         return true;
       }
+    },
+    {
+      type: 'input',
+      name: 'componentGroup',
+      message: 'What is the name of the component group?'
     }, {
       type: 'list',
       name: 'style',
@@ -78,6 +83,14 @@ module.exports = yeoman.Base.extend({
       type: 'list',
       name: 'scripts',
       message: 'Do you want to include javascript?',
+      choices: [
+        {name: chalk.green('Yes'), value: 'yes'},
+        {name: chalk.red('No'), value: 'no'}
+      ]
+    }, {
+      type: 'list',
+      name: 'boilerPlateContent',
+      message: 'Do you want to include a boiler-plate dialog?',
       choices: [
         {name: chalk.green('Yes'), value: 'yes'},
         {name: chalk.red('No'), value: 'no'}
@@ -101,13 +114,12 @@ module.exports = yeoman.Base.extend({
 
       this.props.xmlContentName = nameSpacer(this.props.lessName);
       this.log('contentTitle:\t\t' + chalk.blue(this.props.xmlContentName));
+      this.log('Component Group:\t\t' + chalk.blue(this.props.componentGroupName));
 
 
       this.props.htlName = this.props.componentNameCamel;
-      this.props.htlTemplateName = 'render' + capitalizeFirstLetter(this.props.componentNameCamel);
       this.props.htlPath = true;
       this.log('htlName:\t\t' + chalk.blue(this.props.htlName));
-      this.log('htlTemplateName:\t' + chalk.blue(this.props.htlTemplateName));
 
 
       if (props.style == 'yes') {
@@ -115,6 +127,8 @@ module.exports = yeoman.Base.extend({
         this.log('lessName:\t\t' + chalk.blue(this.props.lessName));
         this.log('lessFileName:\t\t' + chalk.blue(this.props.lessFileName));
       }
+
+      this.props.componentGroupName = this.props.componentGroup;
 
       // Final confirmation prompt
       this.prompt([{
@@ -171,10 +185,25 @@ module.exports = yeoman.Base.extend({
         this.props
       );
       this.fs.copyTpl(
-        this.templatePath('content.xml'),
-        this.destinationPath(path.join(htlPath, this.props.folderName, '/_cq_dialog/.content.xml')),
+        this.templatePath('componentContent.xml'),
+        this.destinationPath(path.join(htlPath, this.props.folderName, '/.content.xml')),
         this.props
       );
+
+      if(props.boilerPlateContent == 'yes' ){
+        this.fs.copyTpl(
+          this.templatePath('content.xml'),
+          this.destinationPath(path.join(htlPath, this.props.folderName, '/_cq_dialog/.content.xml')),
+          this.props
+        );
+      } else {
+        this.fs.copyTpl(
+          this.templatePath('contentEmpty.xml'),
+          this.destinationPath(path.join(htlPath, this.props.folderName, '/_cq_dialog/.content.xml')),
+          this.props
+        );
+      }
+
     }
 
     /*
@@ -204,5 +233,6 @@ function capitalizeFirstLetter(string) {
 }
 
 function nameSpacer(string) {
+  string = capitalizeFirstLetter(string);
   return string.split('-').join(' ');
 }
