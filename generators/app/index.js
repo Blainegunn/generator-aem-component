@@ -102,6 +102,8 @@ module.exports = yeoman.Base.extend({
 
       this.log(chalk.cyan('Look at what you made:'));
 
+
+      this.props.componentGroupName = this.props.componentGroup;
       this.props.folderName = this.props.componentNameCamel;
       this.log('folderName:\t\t' + chalk.blue(this.props.folderName));
 
@@ -127,8 +129,6 @@ module.exports = yeoman.Base.extend({
         this.log('lessName:\t\t' + chalk.blue(this.props.lessName));
         this.log('lessFileName:\t\t' + chalk.blue(this.props.lessFileName));
       }
-
-      this.props.componentGroupName = this.props.componentGroup;
 
       // Final confirmation prompt
       this.prompt([{
@@ -190,7 +190,7 @@ module.exports = yeoman.Base.extend({
         this.props
       );
 
-      if(props.boilerPlateContent == 'yes' ){
+      if(this.props.boilerPlateContent == 'yes' ){
         this.fs.copyTpl(
           this.templatePath('content.xml'),
           this.destinationPath(path.join(htlPath, this.props.folderName, '/_cq_dialog/.content.xml')),
