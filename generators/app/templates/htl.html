@@ -1,3 +1,13 @@
 <div class="component-<%= lessName %>">
   <h2><%= xmlContentName %></h2>
+  <ul>
+    <li>Text: ${properties.text}</li>
+    <li>Url: ${properties.url}</li>
+    <li>Select: ${properties.select}</li>
+    <li>Checkbox: <span data-sly-test="${properties.checker}">Chceked!</span> </li>
+    <li>Slider: ${properties.slider}</li>
+    <li>Number: ${properties.number}</li>
+    <li>Color: ${properties.color}</li>
+    <li>File: ${properties.fileReference}</li>
+  </ul>
 </div>
